@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.nftList .swiper-button-prev,.nftList .swiper-button-next{
+  /* top: 180px; */
+  z-index: 11;
+  bottom: var(--swiper-pagination-bottom, 8px);
+  top: var(--swiper-pagination-top, auto);
+  height: auto;
+}
+.nftList .swiper-button-prev::after,.nftList .swiper-button-next::after{
+  font-size: 20px;
+}
+.nftList .swiper-wrapper{
+  height: 120px;
+}
+.nftList .swiper-button-prev{
+  left: var(--swiper-navigation-sides-offset, 30px);
+}
+.nftList .swiper-button-next{
+  right: var(--swiper-navigation-sides-offset, 30px)
+}

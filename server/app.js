@@ -19,7 +19,7 @@ app.get('/:type/:chain/:id', function(req, res) {
       Market: req.params.chain, 
       Series: req.params.type
     })
-    .then((response) => { console.log(response.data); res.send(response.data); })  
+    .then((response) => { res.send(response.data); })  
     .catch((err) => { console.log(err) })
   } else {
     next();

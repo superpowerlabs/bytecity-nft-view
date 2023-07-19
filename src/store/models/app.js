@@ -1,5 +1,4 @@
-﻿
-const flag = true;
+﻿const flag = true;
 const App = {
   state: {
     isOnline: true,

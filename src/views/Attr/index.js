@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useParams ,useNavigate} from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import http from "@/utils/axios";
 import { url } from "@/utils/configUri";
 import s from "./index.module.less"
@@ -85,6 +85,9 @@ const localUserInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
 const Attr = (props) => {
     const navigate = useNavigate();
     const { type, chain, id } = useParams();
+
+    console.log(useParams());
+
     const [userInfo, setUserInfo] = useState(localUserInfo);
     const [tokenId, setTokenId] = useState(1);
     const [logined, setLogined] = useState(false)
@@ -175,11 +178,11 @@ const Attr = (props) => {
                 {}
                 ).then(res=>{
                     if(res && res?.success && res?.assets){
-                        setNftListData([...res?.assets || []]) 
+                        setNftListData([...res?.assets || []])
                     }
                 }).catch(error=>{
                     message.error({content:'getNftList failed'})
-                    setNftListData([]) 
+                    setNftListData([])
                 })
         }
     })
@@ -198,7 +201,7 @@ const Attr = (props) => {
 
     const handleTokenIdChange = (e) => {
         const { value: inputValue } = e.target;
-        
+
         const reg = /^[1-9]\d*$/;
         if (reg.test(inputValue)) {
             setTokenId(inputValue)
@@ -240,7 +243,7 @@ const Attr = (props) => {
                 setUserInfo(user)
                 break;
             }
-    
+
         }
     }
 
@@ -250,11 +253,11 @@ const Attr = (props) => {
             const { InitCode, BrowserUrl } = loginUrl;
             window.open(BrowserUrl);
             checkLogin(InitCode)
-           
+
         } catch (error) {
-            
+
         }
-        
+
     }
 
     const logout = ()=>{
@@ -296,14 +299,14 @@ const Attr = (props) => {
                         </div>
                         <div className={s.chainWrap}>
                             <div>Chain</div>
-                           
+
                             <Select
                                 style={{ width: 150 }}
                                 options={chainArr}
                                 value={selChain}
                                 placeholder="select chain"
                                 onChange={handleChainChange}
-                                
+
                             />
                         </div>
                         <div className={s.tokenWrap}>
@@ -341,7 +344,7 @@ const Attr = (props) => {
                     </div>
                 </div> */}
                 <div className={s.right}>
-                    
+
                     <div className={s.avatarWrap}>
                         <AvatarInfo
                             size={200}

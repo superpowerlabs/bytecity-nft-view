@@ -7,15 +7,15 @@ npm i
 npm run start
 ```
 
-That comand will build and serve the app on port 3004
+That comand will build and serve the app on port 3304
 
 # Web server
 
-URL `http://localhost:3004/#/brucelee/solana/5` 
+URL `http://localhost:3304/#/brucelee/solana/5` 
 # Test API server
 
 ```
-➜  syn-staking git:(main) ✗ curl  http://localhost:3004/brucelee/solana/5 -H "Accept: application/json" | json_pp
+➜  syn-staking git:(main) ✗ curl  http://localhost:3304/brucelee/solana/5 -H "Accept: application/json" | json_pp
 {
    "code" : 0,
    "data" : {

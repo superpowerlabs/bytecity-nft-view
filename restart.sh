@@ -4,6 +4,6 @@ git reset --hard
 git pull
 
 npm i
-npm build
+npm run build
 pm2 restart byte-view
 

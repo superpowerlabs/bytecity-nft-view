@@ -17,15 +17,15 @@ app.get('/:type/:chain/:id', function(req, res, next) {
   if (/json/.test(contentType)) {
     axios
       .post(url, {
-        TokenId: parseInt(req.params.id), 
-        Market: req.params.chain, 
+        TokenId: parseInt(req.params.id),
+        Market: req.params.chain,
         Series: req.params.type
       })
       .then((response) => { res.send(response.data.data); })
       .catch(() => { res.send({
         success: false,
         error: "Metadata not found"
-      }); 
+      });
     });
   }
   else {
@@ -34,7 +34,7 @@ app.get('/:type/:chain/:id', function(req, res, next) {
 });
 
 app.use("/:anything", function (req, res, next) {
-  console.log("serve static:", req.params)
+  // console.log("serve static:", req.params)
   let v = req.params.anything;
   if (!/\.module.aswm$/.test(v)) {
     switch (v) {
@@ -53,7 +53,7 @@ app.use("/:anything", function (req, res, next) {
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res, next) => {
-  console.log("serve index.html:", req.params);
+  // console.log("serve index.html:", req.params);
   if (res.locals.isHome) {
     res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
   } else {

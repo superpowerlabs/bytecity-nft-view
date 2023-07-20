@@ -12,13 +12,14 @@ const app = express();
 app.use(express.static(path.resolve(__dirname, '../build')));
 
 app.get('/:type/:chain/:id', function(req, res, next) {
+  const {type, chain, id} = req.params;
   const contentType = req.headers['content-type'];
   if (/json/.test(contentType)) {
     axios
     .post(url, {
-      TokenId: parseInt(req.params.id),
-      Market: req.params.chain,
-      Series: req.params.type
+      TokenId: parseInt(id),
+      Market: chain,
+      Series: type
     })
     .then((response) => { res.send(response.data.data); })
     .catch(() => { res.send({
@@ -26,7 +27,7 @@ app.get('/:type/:chain/:id', function(req, res, next) {
       error: "Metadata not found"
     }) })
   } else {
-    next();
+    res.redirect(`/#/${type}/${chain}/${id}`);
   }
 });
 

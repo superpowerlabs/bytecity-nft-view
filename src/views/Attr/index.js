@@ -85,9 +85,6 @@ const localUserInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
 const Attr = (props) => {
     const navigate = useNavigate();
     const { type, chain, id } = useParams();
-
-    console.log(useParams());
-
     const [userInfo, setUserInfo] = useState(localUserInfo);
     const [tokenId, setTokenId] = useState(1);
     const [logined, setLogined] = useState(false)

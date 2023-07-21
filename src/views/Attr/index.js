@@ -121,6 +121,7 @@ const Attr = (props) => {
                 const data = { ...res?.data };
                 setAvatarUrl(data?.Image)
                 const skinData = { ...data?.Skin };
+				delete skinData.parts;
                 const attrs = [...skinData?.attrs];
                 delete skinData?.attrs;
                 delete data?.Skin

@@ -68,10 +68,10 @@ const configJson = {
 }
 
 const unityLoadConfig = {
-    loaderUrl: "/Build/NFTViewer.loader.js",
-    dataUrl: "/Build/NFTViewer.data.gz",
-    frameworkUrl: "/Build/NFTViewer.framework.js.gz",
-    codeUrl: "/Build/NFTViewer.wasm.gz",
+    loaderUrl: "/UntiyBuild/NFTViewer.loader.js",
+    dataUrl: "/UntiyBuild/NFTViewer.data.gz",
+    frameworkUrl: "/UntiyBuild/NFTViewer.framework.js.gz",
+    codeUrl: "/UntiyBuild/NFTViewer.wasm.gz",
     streamingAssetsUrl: "/StreamingAssets",
 }
 

@@ -28,8 +28,9 @@ const LoadWebGL = ({
   }, [loadingProgression])
 
   const handleShowUnity = useCallback(() => {
-    console.log(`setFullyLoaded`);
+    console.log(`handleShowUnity`);
     setFullyLoaded(true);
+
     // sendMessage('Loader', 'ShowUnityPanel');
   }, [sendMessage]);
   

@@ -14,7 +14,6 @@ const app = express();
 app.use("/UntiyBuild/:anything", function (req, res, next) {
   let v = req.params.anything;
   if (/\.gz$/.test(v)) {
-    console.log("Filtering")
     res.header("Content-Encoding", "gzip")
     if (/\.js\./.test(v)) {
       res.header("Content-Type", "application/javascript")

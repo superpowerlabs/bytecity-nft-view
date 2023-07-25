@@ -14,6 +14,7 @@ const app = express();
 app.use("/UntiyBuild/:anything", function (req, res, next) {
   let v = req.params.anything;
   if (/\.gz$/.test(v)) {
+    console.log("Filtering")
     res.header("Content-Encoding", "gzip")
     if (/\.js\./.test(v)) {
       res.header("Content-Type", "application/javascript")
@@ -59,11 +60,13 @@ app.use("/:anything", function (req, res, next) {
       case "manifest.json":
       case "logo192.png":
       case "static":
-	  case "Build":
-	  case "StreamingAssets":
+      case "UntiyBuild":
+	    case "StreamingAssets":
+      case "js":
+      case "img":
         break;
       default:
-        console.log("isHome = true");
+        // console.log("isHome = true");
         res.locals.isHome = true;
     }
   }

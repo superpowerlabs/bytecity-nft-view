@@ -10,6 +10,22 @@ const url = baseUrl+'/nftdata/show'
 const app = express();
 // app.use(compression());
 // Have Node serve the files for our built React app
+
+app.use("/UntiyBuild/:anything", function (req, res, next) {
+  let v = req.params.anything;
+  if (/\.gz$/.test(v)) {
+    res.header("Content-Encoding", "gzip")
+    if (/\.js\./.test(v)) {
+      res.header("Content-Type", "application/javascript")
+    } else if (/\.wasm\./.test(v)) {
+      res.header("Content-Type", "application/wasm")
+    } else if (/\.(data|symbols\.json)\./.test(v)) {
+      res.header("Content-Type", "application/octet-stream")
+    }
+  }
+  next()
+});
+
 app.use(express.static(path.resolve(__dirname, '../build')));
 
 // Handle GET requests to /api route

@@ -2,13 +2,13 @@
 const express = require('express');
 const path = require("path");
 const axios = require('axios');
-const compression = require('compression');
+// const compression = require('compression');
 
 const baseUrl = 'https://test-api.byte.city';
 const url = baseUrl+'/nftdata/show'
 
 const app = express();
-app.use(compression());
+// app.use(compression());
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../build')));
 

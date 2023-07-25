@@ -1,8 +1,10 @@
 ﻿
-const flag = true;
 const App = {
   state: {
-    isOnline: true,
+    isUnityLoaded: false,
+    unitySendMessage: null,
+    loadingProgression: 0,
+    fullyLoaded: false,
   },
   reducers: {
     /**
@@ -17,9 +19,18 @@ const App = {
       };
     }
   },
-  effects: (dispatch) => ({
-    setVisible(visible) {
-      this.updateState({ isOnline: visible });
+  effects: () => ({
+    setIsUnityLoaded(isUnityLoaded) {
+      this.updateState({ isUnityLoaded });
+    },
+    setUnitySendMessage(unitySendMessage) {
+      this.updateState({ unitySendMessage });
+    },
+    setLoadingProgression(loadingProgression) {
+      this.updateState({ loadingProgression });
+    },
+    setFullyLoaded(fullyLoaded) {
+      this.updateState({ fullyLoaded });
     },
   })
 };

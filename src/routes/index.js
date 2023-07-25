@@ -8,8 +8,13 @@ import Attr from "../views/Attr";
 const routes = () => {
   return (
       <Routes>
-        <Route exact path="/:type/:chain/:id" element={<Attr />} />
-        <Route exact path="/" element={<Attr />} />
+        <Route path="/" index element={<Attr />} />
+        <Route path="/" element={<Attr />}>
+          <Route
+            path=":type/:chain/:id"
+            element={<Attr />}
+          ></Route>
+        </Route>
         <Route path="*" element={ <Navigate to='/' />} />
       </Routes>
     );

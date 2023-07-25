@@ -32,26 +32,14 @@ const NftList = ({nftListData,getMetaData})=>{
                         return(
                             <SwiperSlide key={i} onClick={()=>{handleClick({chain,tokenId})}} className={s.slide} >
                                 <AvatarInfo 
-                                    size={50}
+                                    size={66}
                                     src={image}
                                 />
                             </SwiperSlide>
                         )
                     })
                 }
-            {/* 
-            <SwiperSlide className={s.slide}>2</SwiperSlide>
-            <SwiperSlide className={s.slide}>3</SwiperSlide>
-            <SwiperSlide className={s.slide}>4</SwiperSlide>
-            <SwiperSlide className={s.slide}>5</SwiperSlide>
-            <SwiperSlide className={s.slide}>6</SwiperSlide>
-            <SwiperSlide className={s.slide}>7</SwiperSlide>
-            <SwiperSlide className={s.slide}>8</SwiperSlide>
-            <SwiperSlide className={s.slide}>7</SwiperSlide>
-            <SwiperSlide className={s.slide}>8</SwiperSlide>
-            <SwiperSlide className={s.slide}>8</SwiperSlide>
-            <SwiperSlide className={s.slide}>8</SwiperSlide>
-            <SwiperSlide className={s.slide}>10</SwiperSlide> */}
+
 
         </Swiper>
     )

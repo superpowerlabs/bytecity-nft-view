@@ -16,6 +16,10 @@ const sockPort = process.env.WDS_SOCKET_PORT;
 module.exports = function (proxy, allowedHost) {
   const disableFirewall =
     !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true';
+  proxy = [{
+    context: ['/Build','/StreamingAssets'],
+    target: 'http://127.0.0.1:5566',
+  }]
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:

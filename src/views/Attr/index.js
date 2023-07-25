@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, memo } from "react";
+import { connect } from "react-redux";
 import { useParams ,useNavigate} from "react-router-dom";
 import http from "@/utils/axios";
 import { url } from "@/utils/configUri";
@@ -6,75 +7,18 @@ import s from "./index.module.less"
 import AvatarInfo from "@/components/AvatarInfo";
 import NftList from "@/components/NftList";
 import { message, Select, Input } from "antd";
-
-const config = {
-    Brucelee: {
-        name: 'Brucelee',
-        value: 'Brucelee',
-        chain: {
-            Binance: {
-                label: 'Binance',
-                value: 'Binance',
-                tokenID: {
-                    min: 100,
-                    max: 200
-                },
-            },
-            test: {
-                label: 'test',
-                value: 'test',
-                tokenID: {
-                    min: 101,
-                    max: 201
-                },
-            },
-        }
-    },
-    Mobland: {
-        name: 'Mobland',
-        value: 'Mobland',
-        chain: {
-            Mobland: {
-                label: 'Mobland',
-                value: 'Mobland',
-                tokenID: {
-                    min: 1000,
-                    max: 2000
-                },
-            },
-            test1: {
-                label: 'test1',
-                value: 'test1',
-                tokenID: {
-                    min: 1001,
-                    max: 2001
-                },
-            },
-        }
-    },
-    Neko: {
-        name: 'Neko',
-        value: 'Neko',
-        chain: {
-            Neko: {
-                label: 'Neko',
-                value: 'Neko',
-                tokenID: {
-                    min: 10000,
-                    max: 20000
-                },
-            },
-            test2: {
-                label: 'test2',
-                value: 'test2',
-                tokenID: {
-                    min: 10001,
-                    max: 20001
-                },
-            },
-        }
-    },
+import CustomIcon from "@/components/CustomIcon";
+import { configJson } from "@/utils/configJson";
+import LoadWebGL from "@/components/LoadWebGL"
+function copyFn(text) {
+    let copyInput = document.createElement("input");
+    document.body.appendChild(copyInput);
+    copyInput.setAttribute("value", text);
+    copyInput.select();
+    document.execCommand("Copy");
+    copyInput.remove();
 }
+
 
 
 async function sleep(millis) {
@@ -82,10 +26,17 @@ async function sleep(millis) {
 }
 
 const localUserInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
-const Attr = (props) => {
+const Attr = ({
+    unitySendMessage,
+    isUnityLoaded,
+    loadingProgression,
+    fullyLoaded
+}) => {
+    console.log(loadingProgression);
     const navigate = useNavigate();
     const { type, chain, id } = useParams();
     const [userInfo, setUserInfo] = useState(localUserInfo);
+    const [nftLoading, setNftLoading] = useState(false);
     const [tokenId, setTokenId] = useState(1);
     const [logined, setLogined] = useState(false)
     const [avatarUrl, setAvatarUrl] = useState('');
@@ -105,10 +56,15 @@ const Attr = (props) => {
     }, [showObjData])
 
     useEffect(() => {
-        if (type && chain && id) {
-            getMetaData(type, chain, Number(id))
+        if (type && chain && id && unitySendMessage) {
+            getMetaData(type, chain, Number(id));
+            unitySendMessage('Loader','UpdateNFTData',JSON.stringify({
+                type, 
+                chain,
+                id:Number(id)
+            }))    
         }
-    }, [type, chain, id])
+    }, [type, chain, id, unitySendMessage])
 
 
     const getMetaData = (type, chain, id) => {
@@ -121,7 +77,7 @@ const Attr = (props) => {
                 const data = { ...res?.data };
                 setAvatarUrl(data?.Image)
                 const skinData = { ...data?.Skin };
-				delete skinData.parts;
+                delete skinData.parts;
                 const attrs = [...skinData?.attrs];
                 delete skinData?.attrs;
                 delete data?.Skin
@@ -143,7 +99,7 @@ const Attr = (props) => {
     }
 
     useEffect(() => {
-        const chainObj = { ...config[activeSeries]?.chain };
+        const chainObj = { ...configJson[activeSeries]?.chain };
         let chainarr = [];
         Object.keys(chainObj).forEach(key => {
             chainarr.push(chainObj[key])
@@ -154,7 +110,7 @@ const Attr = (props) => {
 
     useEffect(() => {
         if (selChain) {
-            const tokenArea = { ...config[activeSeries]?.chain[selChain]?.tokenID }
+            const tokenArea = { ...configJson[activeSeries]?.chain[selChain]?.tokenID }
             setTokenIdArea(tokenArea);
             setTokenId(tokenArea?.min)
         }
@@ -170,13 +126,15 @@ const Attr = (props) => {
 
     const getNftListData = (()=>{
         if(userInfo && JSON.stringify(userInfo) !== '{}' && userInfo?.Email){
+            setNftLoading(true);
             http(
                 'get',
-                'https://api2.byte.city/v1/nft/get-bruce?email=eumenes@superpower.io',
+                'https://api2.byte.city/v1/nft/get-bruce?email='+userInfo?.Email,
                 {}
                 ).then(res=>{
                     if(res && res?.success && res?.assets){
                         setNftListData([...res?.assets || []]) 
+                        setNftLoading(false);
                     }
                 }).catch(error=>{
                     message.error({content:'getNftList failed'})
@@ -199,10 +157,13 @@ const Attr = (props) => {
 
     const handleTokenIdChange = (e) => {
         const { value: inputValue } = e.target;
-        
-        const reg = /^[1-9]\d*$/;
+        console.log(inputValue);
+        const reg = /[0-9]\d*$/;
         if (reg.test(inputValue)) {
-            setTokenId(inputValue)
+            setTokenId(parseInt(inputValue))
+        }
+        if(inputValue.length === 0){
+            setTokenId('')
         }
     };
 
@@ -264,11 +225,11 @@ const Attr = (props) => {
     }
 
     const changeTokenId = (tag) => {
-        if (tag === 'minus' && Number(tokenId)) {
-            setTokenId(Math.max(tokenIdArea?.min || 1, Number(tokenId - 1)))
+        if (tag === 'minus') {
+            setTokenId(Math.max(tokenIdArea?.min || 0, Number(tokenId - 1)))
         }
-        if (tag === 'plus' && Number(tokenId)) {
-            setTokenId(Math.min(tokenIdArea?.max || 1, Number(tokenId + 1)))
+        if (tag === 'plus') {
+            setTokenId(Math.min(tokenIdArea?.max || 0, Number(tokenId + 1)))
         }
     }
 
@@ -279,71 +240,117 @@ const Attr = (props) => {
 
     return (
         <div className={s.main}>
-            {/* {type && chain && id ? ( */}
-            <div className={s.content}>
-                {/* <div className={s.side}>
+            {!isUnityLoaded && 
+                <div className={s.loadWrap}>
+                    <div className={s.progress}>LOADING: {parseInt((loadingProgression || 0) * 100)}%</div>
+                </div>
+            }
+            <div className={`${s.content} ${isUnityLoaded ? s.show : ''}`}>
+                <div className={s.side}>
                     <div className={s.topWrap}>
                         <div className={s.seriesWrap}>
-                            <div>Series</div>
+                            <div className={s.label}>SERIES</div>
                             {
-                                Object.keys(config).length && Object.keys(config).map((key) => {
+                                Object.keys(configJson).length && Object.keys(configJson).map((key) => {
+                                    const {value,name,image} = configJson[key];
                                     return (
-                                        <div onClick={() => { handleSeriesChange(config[key]?.value) }} className={`${s.item} ${key === activeSeries ? s.active : ''}`} key={key}>
-                                            {config[key]?.name}
-                                        </div>
+                                        <img src={image} onClick={() => { handleSeriesChange(value) }} className={`${s.item} ${key === activeSeries ? s.active : ''}`} key={key} />
                                     )
                                 })
                             }
                         </div>
                         <div className={s.chainWrap}>
-                            <div>Chain</div>
-                           
+                            <div className={s.label}>CHAIN</div>
+                        
                             <Select
-                                style={{ width: 150 }}
+                                style={{ width: 180 }}
                                 options={chainArr}
                                 value={selChain}
                                 placeholder="select chain"
                                 onChange={handleChainChange}
+                                className="chainSel"
                                 
                             />
                         </div>
                         <div className={s.tokenWrap}>
-                            <div>Token Id</div>
+                            <div className={s.label}>TOKEN ID</div>
                             <div className={s.inputWrap}>
-                                <div className={`${s.btn} ${s.minus}`} onClick={() => { changeTokenId('minus') }}>-</div>
+                                <div className={`${s.btn}`} onClick={() => { changeTokenId('minus') }}>
+                                    <CustomIcon 
+                                        name={'BC_NFT_Button_Left'} 
+                                        isHaveHover={true} 
+                                        imgName={'BC_NFT_Button_Left'} 
+                                        width={26} 
+                                        height={26} 
+                                        />
+                                </div>
                                 <Input
                                     onChange={handleTokenIdChange}
                                     placeholder="Input a number"
                                     maxLength={16}
                                     value={tokenId}
                                     onBlur={handleTokenIdBlur}
+                                    className={s.tokenIdInput}
                                 />
-                                <div className={`${s.btn} ${s.plus}`} onClick={() => { changeTokenId('plus') }}>+</div>
+                                <div className={`${s.btn}`} onClick={() => { changeTokenId('plus') }}>
+                                    <CustomIcon 
+                                        name={'BC_NFT_Button_003_Right'} 
+                                        isHaveHover={true} 
+                                        imgName={'BC_NFT_Button_003_Right'} 
+                                        width={26} 
+                                        height={26} 
+                                        />
+                                </div>
                             </div>
 
                         </div>
-                        <div onClick={showNewNft} className={s.showBtn}>show</div>
+                        <div onClick={showNewNft} className={s.showBtn}>SHOW</div>
                     </div>
                     <div className={s.loginWrap}>
                         {logined ?
                             (
                                 <div className={s.loginedWrap}>
-                                    <div className={s.email}>{userInfo?.Email || ''}</div>
-                                    {nftListData && nftListData.length>0 ? <NftList getMetaData={getMetaData} nftListData={nftListData} />: <div>loading nftlist</div>}
-                                    <div className={s.logoutbtn} onClick={logout}>Logout</div>
+                                    <div className={s.email}>
+                                        <div className={s.text}>{userInfo?.Email || ''}</div> 
+                                        <div className={s.icon}>
+                                            <CustomIcon 
+                                                onClick={(e)=>{e.stopPropagation();copyFn(userInfo?.Email || '')}} 
+                                                name={'BC_NFT_Button_004'} 
+                                                isHaveHover={true} 
+                                                imgName={'BC_NFT_Button_004'} 
+                                                width={20} 
+                                                height={20} 
+                                                />
+                                        </div>
+                                    </div>
+                                    <div className={s.nftListWrap}>
+                                    {
+                                        
+                                        nftLoading ? <div>loading nftlist</div> :
+                                        nftListData && nftListData.length>0 ? <NftList getMetaData={getMetaData} nftListData={nftListData} />: <div>NO NFT ASSETS</div>
+                                    
+                                    }
+                                    </div>
+                                    <div className={s.logoutbtn} onClick={logout}>
+                                        <div className={s.icon}>
+                                            
+                                        </div>
+                                        LOGOUT
+                                    </div>
                                 </div>
                             ) :
                             (
                                 <div className={s.loginBtn} onClick={loginSuperAuth}>
-                                    Login
+                                    <div className={s.title}>LOGIN</div>
+                                    <div>SuperAuth Account</div>
                                 </div>
                             )
                         }
                     </div>
-                </div> */}
+                </div>
                 <div className={s.right}>
-                    
-                    <div className={s.avatarWrap}>
+                    <LoadWebGL />
+                    {/* <div className={s.avatarWrap}>
                         <AvatarInfo
                             size={200}
                             src={avatarUrl}
@@ -366,7 +373,6 @@ const Attr = (props) => {
                             :
                             <div className={s.load}>
                                 loading data...
-                                {/* {testStr} */}
                             </div>
                         }
                         {showArrData.length ? showArrData.map((item, index) => {
@@ -378,16 +384,28 @@ const Attr = (props) => {
                             )
                         }) : null}
                         { }
-                    </div>
+                    </div> */}
+
                 </div>
             </div>
-            {/* ):
-                <div>params error</div>
-            } */}
+                
 
         </div>
 
-    )
+    ) 
 }
-
-export default Attr
+const mapStateToProps = ({app}) => {
+    return {
+        unitySendMessage:app.unitySendMessage,
+        isUnityLoaded:app.isUnityLoaded,
+        loadingProgression:app.loadingProgression,
+        fullyLoaded: app.fullyLoaded,
+    };
+  };
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      
+    }
+  }
+  export default memo(connect(mapStateToProps, mapDispatchToProps)(Attr));

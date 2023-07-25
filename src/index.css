@@ -6,6 +6,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+@font-face {
+  font-family: 'archivoHeavy';
+  src: url("./assets/fonts/ArchivoHeavy.ttf");
+}
+
+@font-face {
+  font-family: 'archivoBold';
+  src: url("./assets/fonts/ArchivoBold.ttf");
+}
+html,body{
+  height: 100vh;
+}
+*{
+  font-family: 'archivoBold';
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -18,16 +33,61 @@ code {
   bottom: var(--swiper-pagination-bottom, 8px);
   top: var(--swiper-pagination-top, auto);
   height: auto;
+  width: 26px;
+  height: 26px;
+  /* background: #3f5f8d;      */
+  cursor: pointer;
+  
 }
 .nftList .swiper-button-prev::after,.nftList .swiper-button-next::after{
-  font-size: 20px;
+  content: '';
+  
 }
 .nftList .swiper-wrapper{
-  height: 120px;
+  height: 140px;
 }
 .nftList .swiper-button-prev{
-  left: var(--swiper-navigation-sides-offset, 30px);
+  left: var(--swiper-navigation-sides-offset, 35px);
+  background-image: url(./assets/images/BC_NFT_Button_Left.png);
+}
+.nftList .swiper-button-prev:hover{
+  background-image: url(./assets/images/BC_NFT_Button_Left_hover.png);
 }
 .nftList .swiper-button-next{
-  right: var(--swiper-navigation-sides-offset, 30px)
+  right: var(--swiper-navigation-sides-offset, 35px);
+  background-image: url(./assets/images/BC_NFT_Button_003_Right.png);
+}
+.nftList .swiper-button-next:hover{
+  background-image: url(./assets/images/BC_NFT_Button_003_Right_hover.png);
+}
+.nftList .swiper-pagination{
+  height: 26px;
+  width: 80px;
+  line-height: 26px;
+  left: 50%;
+  font-size: 20px;
+  transform: translateX(-50%);
+  background-color: #2a3546;
+}
+
+.chainSel.ant-select{
+  background-color: unset;
+  
+}
+.chainSel.ant-select:hover .ant-select-selector{
+  border-color: #30333b !important;
+}
+.chainSel.ant-select .ant-select-selector{
+  outline: none;
+  border: none;
+  background-color: unset;
+  border: 2.5px solid #30333b;
+  border-radius: 0;
+}
+.chainSel.ant-select .ant-select-selector .ant-select-selection-item{
+  color: #c1c9d6;
+  font-size: 20px;
+}
+.chainSel.ant-select .ant-select-arrow .anticon >svg{
+  color: #c1c9d6;
 }

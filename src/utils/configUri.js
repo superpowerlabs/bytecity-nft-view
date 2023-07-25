@@ -6,6 +6,7 @@ const url = {
     getData: baseUrl+'/nftdata/show',
     loginUrl: baseUrl+'/superpower/new',
     checkLogin: baseUrl+'/superpower/check',
+    unitySetNFTDataUrl: baseUrl,
 }
 export {
     url,

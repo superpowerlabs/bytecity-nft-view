@@ -23,14 +23,14 @@ const LoadWebGL = ({
   } = useUnityContext(unityLoadConfig);
 
   useEffect(() => {
-    console.log(loadingProgression);
+    // console.log(loadingProgression);
     setLoadingProgression(loadingProgression);
   }, [loadingProgression])
 
   const handleShowUnity = useCallback(() => {
-    console.log(`handleShowUnity`);
+    console.log(`setFullyLoaded`);
     setFullyLoaded(true);
-    sendMessage('Loader', 'ShowUnityPanel');
+    // sendMessage('Loader', 'ShowUnityPanel');
   }, [sendMessage]);
   
   const handelSuperPowerAuthLogin = ()=>{

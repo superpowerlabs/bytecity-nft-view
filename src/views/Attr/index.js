@@ -32,7 +32,7 @@ const Attr = ({
     loadingProgression,
     fullyLoaded
 }) => {
-    console.log(loadingProgression);
+    // console.log(loadingProgression);
     const navigate = useNavigate();
     const { type, chain, id } = useParams();
     const [userInfo, setUserInfo] = useState(localUserInfo);
@@ -56,15 +56,15 @@ const Attr = ({
     }, [showObjData])
 
     useEffect(() => {
-        if (type && chain && id && unitySendMessage) {
-            getMetaData(type, chain, Number(id));
+        if (type && chain && id && fullyLoaded) {
+            // getMetaData(type, chain, Number(id));
             unitySendMessage('Loader','UpdateNFTData',JSON.stringify({
                 type, 
                 chain,
                 id:Number(id)
             }))    
         }
-    }, [type, chain, id, unitySendMessage])
+    }, [type, chain, id, fullyLoaded])
 
 
     const getMetaData = (type, chain, id) => {
@@ -240,7 +240,7 @@ const Attr = ({
 
     return (
         <div className={s.main}>
-            {!isUnityLoaded && 
+            {!fullyLoaded && 
                 <div className={s.loadWrap}>
                     <div className={s.progress}>LOADING: {parseInt((loadingProgression || 0) * 100)}%</div>
                 </div>
@@ -327,7 +327,7 @@ const Attr = ({
                                     {
                                         
                                         nftLoading ? <div>loading nftlist</div> :
-                                        nftListData && nftListData.length>0 ? <NftList getMetaData={getMetaData} nftListData={nftListData} />: <div>NO NFT ASSETS</div>
+                                        nftListData && nftListData.length>0 ? <NftList nftListData={nftListData} />: <div>NO NFT ASSETS</div>
                                     
                                     }
                                     </div>

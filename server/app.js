@@ -26,7 +26,20 @@ app.use("/UntiyBuild/:anything", function (req, res, next) {
   next()
 });
 
-app.use(express.static(path.resolve(__dirname, '../build')));
+app.use("/StreamingAssets/Bundles/:anything", function (req, res, next) {
+  let v = req.params.anything;
+  if (/\.gz$/.test(v)) {
+    res.header("Content-Encoding", "gzip")
+    if (/\.js\./.test(v)) {
+      res.header("Content-Type", "application/javascript")
+    } else if (/\.wasm\./.test(v)) {
+      res.header("Content-Type", "application/wasm")
+    } else if (/\.(data|symbols\.json)\./.test(v)) {
+      res.header("Content-Type", "application/octet-stream")
+    }
+  }
+  next()
+});
 
 // Handle GET requests to /api route
 app.get('/:type/:chain/:id', function(req, res, next) {
@@ -71,6 +84,8 @@ app.use("/:anything", function (req, res, next) {
   }
   next();
 });
+
+app.use(express.static(path.resolve(__dirname, '../build')));
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res, next) => {

@@ -42,6 +42,8 @@ app.use("/:anything", function (req, res, next) {
       case "manifest.json":
       case "logo192.png":
       case "static":
+	  case "Build":
+	  case "StreamingAssets":
         break;
       default:
         console.log("isHome = true");

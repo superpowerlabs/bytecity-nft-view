@@ -28,9 +28,8 @@ const LoadWebGL = ({
   }, [loadingProgression])
 
   const handleShowUnity = useCallback(() => {
-    console.log(`handleShowUnity`);
+    console.log(`Call NftViewUnityInit`);
     setFullyLoaded(true);
-
     // sendMessage('Loader', 'ShowUnityPanel');
   }, [sendMessage]);
   

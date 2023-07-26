@@ -51,20 +51,22 @@ const Attr = ({
     const dataIsNull = useMemo(() => {
         if (JSON.stringify(showObjData) === '{}' || Object.keys(showObjData)?.length === 0) {
             return true
-        }  
+        }
         return false
     }, [showObjData])
 
     useEffect(() => {
-        if (type && chain && id && isUnityLoaded) {
+        console.log(`fullyLoaded`,fullyLoaded);
+        if (type && chain && id && fullyLoaded) {
             // getMetaData(type, chain, Number(id));
+            console.log(`send params to Unity`);
             unitySendMessage('Loader','UpdateNFTData',JSON.stringify({
                 type, 
                 chain,
                 id:Number(id)
             }))    
         }
-    }, [type, chain, id, isUnityLoaded])
+    }, [type, chain, id, fullyLoaded])
 
 
     const getMetaData = (type, chain, id) => {
@@ -240,12 +242,12 @@ const Attr = ({
 
     return (
         <div className={s.main}>
-            {!isUnityLoaded && 
+            {!fullyLoaded && 
                 <div className={s.loadWrap}>
                     <div className={s.progress}>LOADING: {parseInt((loadingProgression || 0) * 100)}%</div>
                 </div>
             }
-            <div className={`${s.content} ${isUnityLoaded ? s.show : ''}`}>
+            <div className={`${s.content} ${fullyLoaded ? s.show : ''}`}>
                 <div className={s.side}>
                     <div className={s.topWrap}>
                         <div className={s.seriesWrap}>

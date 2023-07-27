@@ -11,7 +11,7 @@ const app = express();
 // app.use(compression());
 // Have Node serve the files for our built React app
 
-app.use("/UntiyBuild/:anything", function (req, res, next) {
+app.use("/UnityBuild/:anything", function (req, res, next) {
   let v = req.params.anything;
   if (/\.gz$/.test(v)) {
     res.header("Content-Encoding", "gzip")

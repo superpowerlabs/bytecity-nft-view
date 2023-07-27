@@ -1,11 +1,11 @@
-import Brucelee from "@/assets/images/BC_NFT_Picture_BruceLee_001.png"
+import brucelee from "@/assets/images/BC_NFT_Picture_BruceLee_001.png"
 // import Neko from "@/assets/images/BC_NFT_Picture_Neko_001.png"
-// import Mobland from "@/assets/images/BC_NFT_Picture_Mobland_001.png"
+// import bruceleeimmortal from "@/assets/images/BC_NFT_Picture_Mobland_001.png"
 const configJson = {
-    Brucelee: {
-        name: 'Brucelee',
-        value: 'Brucelee',
-        image: Brucelee,
+    brucelee: {
+        name: 'brucelee',
+        value: 'brucelee',
+        image: brucelee,
         chain: {
             sui: {
                 label: 'sui',
@@ -63,15 +63,39 @@ const configJson = {
                     max: 9999
                 },
             },
+			oneplanet: {
+                label: 'oneplanet',
+                value: 'oneplanet',
+                tokenID: {
+                    min: 0,
+                    max: 999
+                },
+            },
         }
     }
+	// bruceleeimmortal: {
+    //     name: 'bruceleeimmortal',
+    //     value: 'bruceleeimmortal',
+    //     image: bruceleeimmortal,
+    //     chain: {
+    //         eth: {
+    //             label: 'eth',
+    //             value: 'eth',
+    //             tokenID: {
+    //                 min: 1,
+    //                 max: 10000
+    //             },
+    //         }
+    //     }
+    // }
+
 }
 
 const unityLoadConfig = {
-    loaderUrl: "/UntiyBuild/NFTViewer.loader.js",
-    dataUrl: "/UntiyBuild/NFTViewer.data.gz",
-    frameworkUrl: "/UntiyBuild/NFTViewer.framework.js.gz",
-    codeUrl: "/UntiyBuild/NFTViewer.wasm.gz",
+    loaderUrl: "/UnityBuild/NFTViewer.loader.js",
+    dataUrl: "/UnityBuild/NFTViewer.data.gz",
+    frameworkUrl: "/UnityBuild/NFTViewer.framework.js.gz",
+    codeUrl: "/UnityBuild/NFTViewer.wasm.gz",
     streamingAssetsUrl: "/StreamingAssets",
 }
 

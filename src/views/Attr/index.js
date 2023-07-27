@@ -35,14 +35,15 @@ const Attr = ({
     // console.log(loadingProgression);
     const navigate = useNavigate();
     const { type, chain, id } = useParams();
+    const [userCon, setUserCon] = useState(false);
     const [userInfo, setUserInfo] = useState(localUserInfo);
     const [nftLoading, setNftLoading] = useState(false);
-    const [tokenId, setTokenId] = useState(1);
+    const [tokenId, setTokenId] = useState(parseInt(id)|| 0);
     const [logined, setLogined] = useState(false)
     const [avatarUrl, setAvatarUrl] = useState('');
-    const [activeSeries, setActiveSeries] = useState('Brucelee');
+    const [activeSeries, setActiveSeries] = useState(type || 'brucelee');
     const [chainArr, setChainArr] = useState([]);
-    const [selChain, setSelChain] = useState('');
+    const [selChain, setSelChain] = useState(chain || '');
     const [tokenIdArea, setTokenIdArea] = useState({});
     const [showObjData, setShowObjData] = useState({});
     const [showArrData, setShowArrData] = useState([]);
@@ -64,7 +65,9 @@ const Attr = ({
                 type, 
                 chain,
                 id:Number(id)
-            }))    
+            }))
+            
+
         }
     }, [type, chain, id, fullyLoaded])
 
@@ -107,14 +110,14 @@ const Attr = ({
             chainarr.push(chainObj[key])
         });
         setChainArr([...chainarr]);
-        setSelChain(chainarr[0]?.value)
+        (userCon || !chain) && setSelChain(chainarr[0]?.value)
     }, [activeSeries])
 
     useEffect(() => {
         if (selChain) {
             const tokenArea = { ...configJson[activeSeries]?.chain[selChain]?.tokenID }
             setTokenIdArea(tokenArea);
-            setTokenId(tokenArea?.min)
+            (userCon || !id)  && setTokenId(tokenArea?.min)
         }
     }, [selChain,activeSeries])
 
@@ -147,6 +150,7 @@ const Attr = ({
 
     const handleSeriesChange = (value) => {
         console.log(value);
+        setUserCon(true);
         if (value !== activeSeries) {
             setActiveSeries(value);
         }
@@ -154,6 +158,7 @@ const Attr = ({
 
     const handleChainChange = (value) => {
         // console.log(value);
+        setUserCon(true);
         setSelChain(value)
     }
 
@@ -271,7 +276,6 @@ const Attr = ({
                                 placeholder="select chain"
                                 onChange={handleChainChange}
                                 className="chainSel"
-                                
                             />
                         </div>
                         <div className={s.tokenWrap}>

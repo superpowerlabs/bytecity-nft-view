@@ -7,6 +7,7 @@ import "swiper/css/bundle";
 import s from './index.module.less';
 
 import { memo } from 'react'
+
 const NftList = ({nftListData,getMetaData})=>{
     const navigate = useNavigate()
     const handleClick = ({chain,tokenId})=>{

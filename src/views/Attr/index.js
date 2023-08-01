@@ -10,6 +10,7 @@ import { message, Select, Input } from "antd";
 import CustomIcon from "@/components/CustomIcon";
 import { configJson } from "@/utils/configJson";
 import LoadWebGL from "@/components/LoadWebGL"
+import activeBgImg from "@/assets/images/UI-BC_Picture_NFC_XuanZhong.png";
 function copyFn(text) {
     let copyInput = document.createElement("input");
     document.body.appendChild(copyInput);
@@ -18,7 +19,6 @@ function copyFn(text) {
     document.execCommand("Copy");
     copyInput.remove();
 }
-
 
 
 async function sleep(millis) {
@@ -261,13 +261,18 @@ const Attr = ({
                                 Object.keys(configJson).length && Object.keys(configJson).map((key) => {
                                     const {value,name,image} = configJson[key];
                                     return (
-                                        <img src={image} onClick={() => { handleSeriesChange(value) }} className={`${s.item} ${key === activeSeries ? s.active : ''}`} key={key} />
+                                        <div className={`${s.item}`} key={key}>
+                                            <div className={`${s.activeBg} ${key === activeSeries ? s.show : ''}`}>
+                                                <img src={activeBgImg} />
+                                            </div>
+                                            <img src={image} onClick={() => { handleSeriesChange(value) }} />
+                                        </div>
                                     )
                                 })
                             }
                         </div>
                         <div className={s.chainWrap}>
-                            <div className={s.label}>CHAIN</div>
+                            <div className={s.label}>MARKET</div>
                         
                             <Select
                                 style={{ width: 180 }}
@@ -281,14 +286,13 @@ const Attr = ({
                         <div className={s.tokenWrap}>
                             <div className={s.label}>TOKEN ID</div>
                             <div className={s.inputWrap}>
-                                <div className={`${s.btn}`} onClick={() => { changeTokenId('minus') }}>
+                                <div className={`${s.btn} ${s.minus}`} onClick={() => { changeTokenId('minus') }}>
                                     <CustomIcon 
-                                        name={'BC_NFT_Button_Left'} 
-                                        isHaveHover={true} 
-                                        imgName={'BC_NFT_Button_Left'} 
-                                        width={26} 
-                                        height={26} 
-                                        />
+                                        name={'UI-BC_Button_XuanZe_l'} 
+                                        imgName={'UI-BC_Button_XuanZe_l'} 
+                                        width={34} 
+                                        height={34} 
+                                        /> 
                                 </div>
                                 <Input
                                     onChange={handleTokenIdChange}
@@ -298,24 +302,32 @@ const Attr = ({
                                     onBlur={handleTokenIdBlur}
                                     className={s.tokenIdInput}
                                 />
-                                <div className={`${s.btn}`} onClick={() => { changeTokenId('plus') }}>
+                                <div className={`${s.btn} ${s.plus}`} onClick={() => { changeTokenId('plus') }}>
                                     <CustomIcon 
-                                        name={'BC_NFT_Button_003_Right'} 
-                                        isHaveHover={true} 
-                                        imgName={'BC_NFT_Button_003_Right'} 
-                                        width={26} 
-                                        height={26} 
+                                        name={'UI-BC_Button_XuanZe'} 
+                                        imgName={'UI-BC_Button_XuanZe'} 
+                                        width={34} 
+                                        height={34} 
                                         />
                                 </div>
                             </div>
-
+                            <div onClick={showNewNft} className={s.showBtn}>SHOW</div>
                         </div>
-                        <div onClick={showNewNft} className={s.showBtn}>SHOW</div>
+                        
                     </div>
                     <div className={s.loginWrap}>
                         {logined ?
                             (
                                 <div className={s.loginedWrap}>
+                                    <div className={s.label}>EXISTING TOKEN</div>
+                                    <div className={s.nftListWrap}>
+                                    {
+                                        
+                                        nftLoading ? <div className={s.noData}>LOADING...</div> :
+                                        nftListData && nftListData.length>0 ? <NftList nftListData={nftListData} />: <div className={s.noData}>NO NFT ASSETS</div>
+                                    
+                                    }
+                                    </div>
                                     <div className={s.email}>
                                         <div className={s.text}>{userInfo?.Email || ''}</div> 
                                         <div className={s.icon}>
@@ -329,14 +341,6 @@ const Attr = ({
                                                 />
                                         </div>
                                     </div>
-                                    <div className={s.nftListWrap}>
-                                    {
-                                        
-                                        nftLoading ? <div>loading nftlist</div> :
-                                        nftListData && nftListData.length>0 ? <NftList nftListData={nftListData} />: <div>NO NFT ASSETS</div>
-                                    
-                                    }
-                                    </div>
                                     <div className={s.logoutbtn} onClick={logout}>
                                         <div className={s.icon}>
                                             
@@ -348,7 +352,10 @@ const Attr = ({
                             (
                                 <div className={s.loginBtn} onClick={loginSuperAuth}>
                                     <div className={s.title}>LOGIN</div>
-                                    <div>SuperAuth Account</div>
+                                    <div className={s.icon}>
+                                            
+                                    </div>
+                                    {/* <div>SuperAuth Account</div> */}
                                 </div>
                             )
                         }

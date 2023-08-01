@@ -30,11 +30,11 @@ code {
 .nftList .swiper-button-prev,.nftList .swiper-button-next{
   /* top: 180px; */
   z-index: 11;
-  bottom: var(--swiper-pagination-bottom, 8px);
+  bottom: var(--swiper-pagination-bottom, 5px);
   top: var(--swiper-pagination-top, auto);
   height: auto;
-  width: 26px;
-  height: 26px;
+  width: 34px;
+  height: 34px;
   /* background: #3f5f8d;      */
   cursor: pointer;
   
@@ -47,31 +47,37 @@ code {
   height: 140px;
 }
 .nftList .swiper-button-prev{
-  left: var(--swiper-navigation-sides-offset, 35px);
-  background-image: url(./assets/images/BC_NFT_Button_Left.png);
+  left: var(--swiper-navigation-sides-offset, 22px);
+  background-image: url(./assets/images/UI-BC_Button_XuanZe_l.png);
 }
-.nftList .swiper-button-prev:hover{
+/* .nftList .swiper-button-prev:hover{
   background-image: url(./assets/images/BC_NFT_Button_Left_hover.png);
-}
+} */
 .nftList .swiper-button-next{
-  right: var(--swiper-navigation-sides-offset, 35px);
-  background-image: url(./assets/images/BC_NFT_Button_003_Right.png);
+  right: var(--swiper-navigation-sides-offset, 22px);
+  background-image: url(./assets/images/UI-BC_Button_XuanZe.png);
 }
-.nftList .swiper-button-next:hover{
+/* .nftList .swiper-button-next:hover{
   background-image: url(./assets/images/BC_NFT_Button_003_Right_hover.png);
-}
+} */
 .nftList .swiper-pagination{
-  height: 26px;
-  width: 80px;
-  line-height: 26px;
+  height: 34px;
+  width: 180px;
+  line-height: 34px;
   left: 50%;
   font-size: 20px;
   transform: translateX(-50%);
   background-color: #2a3546;
+  /* position: relative; */
 }
-
+.nftList .swiper-pagination-fraction{
+  bottom: var(--swiper-pagination-bottom, 5px);
+}
+.chainSel{
+  margin-top: 8px;
+}
 .chainSel.ant-select{
-  background-color: unset;
+  background-color: #000;
   
 }
 .chainSel.ant-select:hover .ant-select-selector{
@@ -81,13 +87,20 @@ code {
   outline: none;
   border: none;
   background-color: unset;
-  border: 2.5px solid #30333b;
   border-radius: 0;
+  height: 34px;
 }
 .chainSel.ant-select .ant-select-selector .ant-select-selection-item{
-  color: #c1c9d6;
+  color: #fff;
   font-size: 20px;
 }
-.chainSel.ant-select .ant-select-arrow .anticon >svg{
-  color: #c1c9d6;
+.chainSel.ant-select .ant-select-arrow{
+  width: 34px;
+  height: 34px;
+  background-image: url(./assets/images/UI-BC_Button_XuanZe_down.png);
+  right: 0;
+  top: 5px;
+}
+.chainSel.ant-select .ant-select-arrow .anticon{
+  display: none;
 }

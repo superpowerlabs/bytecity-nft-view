@@ -9,7 +9,8 @@ import NftList from "@/components/NftList";
 import { message, Select, Input } from "antd";
 import CustomIcon from "@/components/CustomIcon";
 import { configJson } from "@/utils/configJson";
-import LoadWebGL from "@/components/LoadWebGL"
+import LoadWebGL from "@/components/LoadWebGL";
+import LoadPage from "@/components/LoadPage";
 import activeBgImg from "@/assets/images/UI-BC_Picture_NFC_XuanZhong.png";
 function copyFn(text) {
     let copyInput = document.createElement("input");
@@ -125,7 +126,7 @@ const Attr = ({
         if(userInfo && JSON.stringify(userInfo) !== '{}'){
             localStorage.setItem('userInfo',JSON.stringify(userInfo));
             setLogined(true);
-            getNftListData()
+            getNftListData()    
         }
     },[userInfo])
 
@@ -181,11 +182,7 @@ const Attr = ({
 
     const getLoginUrl = ()=>{
         return new Promise((resolve,reject)=>{
-            http('post',url.loginUrl, {
-                TokenId: id,
-                Market: chain,
-                Series: type,
-            }).then((res)=>{
+            http('post',url.loginUrl, {}).then((res)=>{
                 if(res.RetCode === 0){
                     resolve(res)
                 }else(
@@ -247,11 +244,7 @@ const Attr = ({
 
     return (
         <div className={s.main}>
-            {!fullyLoaded && 
-                <div className={s.loadWrap}>
-                    <div className={s.progress}>LOADING: {parseInt((loadingProgression || 0) * 100)}%</div>
-                </div>
-            }
+            {!fullyLoaded && <LoadPage loadingProgression={loadingProgression} />}
             <div className={`${s.content} ${fullyLoaded ? s.show : ''}`}>
                 <div className={s.side}>
                     <div className={s.topWrap}>

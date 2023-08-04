@@ -1,0 +1,127 @@
+.loadWrap{
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background: url(../../assets/images/UI-BC_BG_NewUI_BG_013.png);
+  background-size: cover;
+  background-position: center;
+  color: #f2f2f2;
+  // .progress{
+  //     color: #fff;
+  //     font-size: 40px;
+  //     position: absolute;
+  //     bottom: 20%;
+  //     width: 100%;
+  //     text-align: center;
+  // }
+  .bottom{
+    width: 100%;
+    position: absolute;
+    bottom: 45px;
+    .top{
+      padding-left: 5%;
+      display: flex;
+      flex-direction: column;
+      .logo{
+        width: 216px;
+        height: 66px;
+        background: url(../../assets/images/ByteCity_Horizontal_White.png);
+        background-size: 100% auto;
+        margin-left: 15px;
+      }
+      .desWrap{
+        position: relative;
+        width: 50%;
+        margin-top: 18px;
+        .tipIcon{
+          position: absolute;
+          background-size: 100% auto;
+        }
+        .dot{
+          width: 4px;
+          height: 4px;
+          background: url(../../assets/images/UI-CnGraph_NFT_ZhuangShiFangKuai.png);
+        }
+        .dotLeft{
+          left: -7px;
+          top: -1px;
+        }
+        .dotRight{
+          right: -5px;
+          bottom: -4px;
+        }
+        .border{
+          width: 28px;
+          height: 4px;
+          background: url(../../assets/images/UI-CnGraph_NFT_LOADINGZhuangShiTiao.png);
+          top: -2px;
+          left: 18px;
+        }
+        .testBg{
+          padding: 18px;
+          background-color: rgba(0, 0, 0, .3);
+          text-align: left;
+          color: #fff;
+          font-size: 20px;
+        }
+      }
+    }
+    .progressWrap{
+      width: 80%;
+      margin: 30px auto 0;
+      height: 53px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      .leftTip{
+        width: 72px;
+        height: 53px;
+        background: url(../../assets/images/UI-CnGraph_NFT_LOADINGZuo.png);
+        background-size: 100% auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .rightTip{
+        width: 29px;
+        height: 53px;
+        background: url(../../assets/images/UI-CnGraph_NFT_LOADINGYou.png);
+        background-size: 100% auto;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      .progressConten{
+        width: 96%;
+        height: 12px;
+        border: 1px solid #fff;
+        display: flex;
+        .scorllPercent{
+          background-color: #fed322;
+          height: 100%;
+        }
+      }
+      .progress{
+        position: absolute;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        bottom: -5px;
+        font-size: 12px;
+        div{
+          font-family: 'numberFont';
+        }
+        .text{
+          position: absolute;
+          right: 2%;
+          font-size: 30px;
+          
+        }
+      }
+    }
+  }
+}

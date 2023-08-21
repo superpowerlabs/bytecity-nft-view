@@ -1,0 +1,12 @@
+{
+  "name": "get-nfts",
+  "version": "0.0.1",
+  "dependencies": {
+    "axios":"^1.4.0"
+  },
+  "scripts": {
+    "zip": "zip -r ../getNfts.zip . -x *.git*",
+    "build": "npm install; npm run zip",
+    "deploy": "aws lambda update-function-code --function-name getNFTs --zip-file ../getNfts.zip"
+  }
+}

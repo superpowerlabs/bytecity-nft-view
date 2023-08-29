@@ -1,6 +1,7 @@
 import brucelee from "@/assets/images/BC_NFT_Picture_BruceLee_001.png"
-// import Neko from "@/assets/images/BC_NFT_Picture_Neko_001.png"
-// import bruceleeimmortal from "@/assets/images/BC_NFT_Picture_Mobland_001.png"
+import genesis from "@/assets/images/UI-BC_Picture_NFT_Genesis.png"
+import oracle from "@/assets/images/UI-BC_Picture_NFT_Oracle.png"
+import zeta from "@/assets/images/UI-BC_Picture_NFT_ZetaNite.png"
 const configJson = {
     brucelee: {
         name: 'brucelee',
@@ -23,7 +24,7 @@ const configJson = {
                     max: 9999
                 },
             },
-			cardano: {
+            cardano: {
                 label: 'cardano',
                 value: 'cardano',
                 tokenID: {
@@ -31,7 +32,7 @@ const configJson = {
                     max: 9999
                 },
             },
-			eth: {
+            eth: {
                 label: 'eth',
                 value: 'eth',
                 tokenID: {
@@ -39,7 +40,7 @@ const configJson = {
                     max: 9999
                 },
             },
-			polygon: {
+            polygon: {
                 label: 'polygon',
                 value: 'polygon',
                 tokenID: {
@@ -47,7 +48,7 @@ const configJson = {
                     max: 9999
                 },
             },
-			solana: {
+            solana: {
                 label: 'solana',
                 value: 'solana',
                 tokenID: {
@@ -55,7 +56,7 @@ const configJson = {
                     max: 9999
                 },
             },
-			zksync: {
+            zksync: {
                 label: 'zksync',
                 value: 'zksync',
                 tokenID: {
@@ -63,7 +64,7 @@ const configJson = {
                     max: 9999
                 },
             },
-			oneplanet: {
+            oneplanet: {
                 label: 'oneplanet',
                 value: 'oneplanet',
                 tokenID: {
@@ -72,23 +73,54 @@ const configJson = {
                 },
             },
         }
-    }
-	// bruceleeimmortal: {
-    //     name: 'bruceleeimmortal',
-    //     value: 'bruceleeimmortal',
-    //     image: bruceleeimmortal,
-    //     chain: {
-    //         eth: {
-    //             label: 'eth',
-    //             value: 'eth',
-    //             tokenID: {
-    //                 min: 1,
-    //                 max: 10000
-    //             },
-    //         }
-    //     }
-    // }
+    },
 
+    zeta: {
+        name: 'zeta',
+        value: 'zeta',
+        image: zeta,
+        chain: {
+            zetachain: {
+                label: 'zetachain',
+                value: 'zetachain',
+                tokenID: {
+                    min: 0,
+                    max: 99999
+                },
+            },
+        }
+    },
+
+    genesis: {
+        name: 'genesis',
+        value: 'genesis',
+        image: genesis,
+        chain: {
+            eth: {
+                label: 'eth',
+                value: 'eth',
+                tokenID: {
+                    min: 1,
+                    max: 2400
+                },
+            },
+        }
+    },
+    oracle: {
+        name: 'oracle',
+        value: 'oracle',
+        image: oracle,
+        chain: {
+            eth: {
+                label: 'eth',
+                value: 'eth',
+                tokenID: {
+                    min: 1,
+                    max: 600
+                },
+            },
+        }
+    },
 }
 
 const unityLoadConfig = {
